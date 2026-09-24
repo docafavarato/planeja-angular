@@ -9,6 +9,10 @@
 
 <main class="content">
     <div class="card-full">
+        <button class="btn-secondary" type="button" [routerLink]="['/pages/register-cards']">
+            <i class="fa-solid fa-plus"></i>
+            Cadastrar novo
+        </button>
         <div class="table-card">
             @if (list$ | async; as list) {
                 <table class="datatable">
@@ -26,14 +30,14 @@
                                 <td> {{ card.name }} </td>
                                 <td> {{ card.brand }} </td>
                                 <td>
-                                    <span class="badge badge-warning">Inativo</span>
+                                    <span class="badge" [ngClass]="card.active ? 'badge-success' : 'badge-warning'">{{ card.active ? 'Ativo' : 'Inativo' }}</span>
                                 </td>
                                 <td class="text-center">
                                     <button class="icon-btn" (click)="prepareEdit(card.id);" title="Editar">
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
-                                    <button class="icon-btn danger">
-                                        <i class="fa-solid fa-ban"></i>
+                                    <button class="icon-btn" [ngClass]="card.active ? 'danger' : 'success'" (click)="changeStatus(card.id)">
+                                        <i class="fa-solid" [ngClass]="card.active ? 'fa-ban' : 'fa-check'"></i>
                                     </button>
                                 </td>
                             </tr>

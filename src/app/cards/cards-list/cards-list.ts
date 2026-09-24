@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import { PageResult } from '../../common/pagination/page-result';
 import { CardDetails } from '../card-data';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cards-list',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './cards-list.html',
   styleUrl: './cards-list.scss',
 })
@@ -16,6 +17,7 @@ export class CardsList implements OnInit {
 
   service = inject(CardService);
   router = inject(Router);
+  toast = inject(ToastrService);
   list$!: Observable<PageResult<CardDetails>>;
   currentPage = 0;
   pageSize = 10;
@@ -71,5 +73,12 @@ export class CardsList implements OnInit {
         id: id
       }
     });
+  }
+
+  changeStatus(cardId: string) {
+    this.service.changeStatus(cardId).subscribe(next => {
+      this.toast.success("Registro atualizado com sucesso!");
+      this.listCards();
+    })
   }
 }

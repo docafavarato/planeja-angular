@@ -7,5 +7,6 @@ export class CardDetails {
     id!: string;
     name!: string;
     brand!: string;
-    registerDate!: Date
+    registerDate!: Date;
+    active!: boolean;
 }

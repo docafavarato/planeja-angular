@@ -5,7 +5,7 @@ import { CardDataForm, CardDetails } from '../card-data';
 import { ValidationErrorResponse } from '../../common/validation/validation-error-model';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 interface RegisterCardForm {
@@ -15,7 +15,7 @@ interface RegisterCardForm {
 
 @Component({
   selector: 'app-register-card',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './register-card.html',
   styleUrl: './register-card.scss',
 })
@@ -75,6 +75,8 @@ export class RegisterCard implements OnInit {
       next: (response) => {
         console.log('recebendo a resposta do servidor: ', response);
         this.toast.success("Cartão cadastrado/atualizado com sucesso!");
+        this.form.reset();
+        this.idEditCard = null;
       },
       error: (error) => this.onApiError(error)
     });

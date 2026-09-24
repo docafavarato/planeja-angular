@@ -27,4 +27,8 @@ export class CardService {
   update(id: string, data: CardDataForm) : Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${id}`, data)
   }
+
+  changeStatus(id: string) : Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/${id}/status`, null)
+  }
 }
