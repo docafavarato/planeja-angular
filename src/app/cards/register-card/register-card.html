@@ -1,0 +1,49 @@
+<header class="header">
+    <h1>Cadastro de Cartões</h1>
+    <div class="user-area">
+        <span class="user-name">Olá, Usuário</span>
+        <i class="fa-solid fa-cicle-user"></i>
+    </div>
+</header>
+
+<main class="content">
+    <div class="card">
+        <h2>{{ idEditCard ? 'Edição de Cartão' : 'Salvar' }}</h2>
+
+        <form [formGroup]="form" (ngSubmit)="handleSubmit()" class="form">
+            <div class="form-group">
+                <label for="name">Nome do Cartão: *</label>
+                <input formControlName="name" type="text" id="name" name="name" placeholder="Ex: Meucartão">
+                @if(form.controls.name.hasError('required') && form.controls.name.touched) {
+                    <span class="form-hint form-hint-error">O nome do cartão é obrigatório</span>
+                }
+
+                @if(form.controls.name.hasError('apiError')) {
+                    <span class="form-hint form-hint-error">{{ form.get('nome')?.errors?.['apiError'] }}</span>
+                }
+            </div>
+            <div class="form-group">
+                <label for="brand">Bandeira: *</label>
+                <select formControlName="brand">
+                    <option value="">Selecione..</option>
+                    <option value="VISA">Visa</option>
+                    <option value="MASTERCARD">Mastercard</option>
+                    <option value="AMERICAN_EXPRESS">American Express</option>
+                    <option value="DINERS">Diners</option>
+                </select>
+                @if(form.controls.brand.hasError('required') && form.controls.brand.touched) {
+                    <span class="form-hint form-hint-error">A bandeira do cartão é obrigatória</span>
+                }
+
+                @if(form.controls.brand.hasError('apiError')) {
+                    <span class="form-hint form-hint-error">{{ form.get('nome')?.errors?.['apiError'] }}</span>
+                }
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">{{ idEditCard ? 'Editar' : 'Salvar' }}</button>
+                <button type="button" class="btn-secondary">Cancelar</button>
+            </div>
+        </form>
+
+    </div>
+</main>

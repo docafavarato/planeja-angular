@@ -1,0 +1,62 @@
+<header class="header">
+    <h1>Meus Cartões</h1>
+
+    <div class="user-area">
+        <span class="user-name">Olá, Usuário</span>
+        <i class="fa-solid fa-cicle-user"></i>
+    </div>
+</header>
+
+<main class="content">
+    <div class="card-full">
+        <div class="table-card">
+            @if (list$ | async; as list) {
+                <table class="datatable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Bandeira</th>
+                            <th>Status</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (card of list.content; track card.id) {
+                            <tr>
+                                <td> {{ card.name }} </td>
+                                <td> {{ card.brand }} </td>
+                                <td>
+                                    <span class="badge badge-warning">Inativo</span>
+                                </td>
+                                <td class="text-center">
+                                    <button class="icon-btn" (click)="prepareEdit(card.id);" title="Editar">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="icon-btn danger">
+                                        <i class="fa-solid fa-ban"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="table-footer">
+                    <span>Mostrando {{ initalRegister(list) }} - {{ finalRegister(list) }} de {{ list.totalElements }} registros</span>
+
+                    <div class="pagination">
+                        <button class="page-btn" [class.disabled]="list.first" (click)="navigatePrevious(list);">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        @for (page of pages(list.totalPages); track page) {
+                            <button class="page-btn" [class.active]="page === list.number" (click)="navigate(page)">{{ page + 1 }}</button>
+                        }
+                        <button class="page-btn" [class.disabled]="list.last" (click)="navigateNext(list);">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</main>
