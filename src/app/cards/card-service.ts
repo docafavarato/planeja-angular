@@ -23,4 +23,8 @@ export class CardService {
   getById(id: String) : Observable<CardDetails> {
     return this.http.get<CardDetails>(`${this.baseUrl}/${id}`);
   }
+
+  update(id: string, data: CardDataForm) : Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}`, data)
+  }
 }

@@ -6,6 +6,7 @@ import { ValidationErrorResponse } from '../../common/validation/validation-erro
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 interface RegisterCardForm {
   name: FormControl<string>;
@@ -68,8 +69,10 @@ export class RegisterCard implements OnInit {
 
     console.log(this.form.value);
     const cardData: CardDataForm = this.form.value as CardDataForm;
-    this.service.create(cardData).subscribe({
-      next: (response: CardDetails) => {
+
+    const req: Observable<CardDetails | void> = this.idEditCard ? this.service.update(this.idEditCard, cardData) : this.service.create(cardData);
+    req.subscribe({
+      next: (response) => {
         console.log('recebendo a resposta do servidor: ', response);
         this.toast.success("Cartão cadastrado/atualizado com sucesso!");
       },
